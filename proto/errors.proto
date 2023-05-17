@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "./pb";
+
+message ErrorDetail {
+  string errorCode = 1;
+  string message = 2;
+  map<string, string> meta = 3;
+}

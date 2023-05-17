@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "./pb";
+
+import "proto/user.proto";
+import "google/protobuf/empty.proto";
+
+service UserService {
+  rpc List(google.protobuf.Empty) returns (ListResponse) {}
+  rpc Create(User) returns (google.protobuf.Empty) {}
+}
+
+message ListResponse {
+  bool ok = 1;
+  repeated User users = 2;
+}
