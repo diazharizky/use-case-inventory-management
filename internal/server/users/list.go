@@ -2,27 +2,21 @@ package users
 
 import (
 	"context"
-	"log"
 
+	"github.com/diazharizky/use-case-inventory-management/internal/errors"
 	"github.com/diazharizky/use-case-inventory-management/pb"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-func (srv server) List(ctx context.Context, emp *emptypb.Empty) (*pb.ListResponse, error) {
-	var stat *status.Status
-
+func (srv server) List(ctx context.Context, emp *emptypb.Empty) (*pb.Users, error) {
 	users, err := srv.appCtx.UserRepository.List()
-	if err != nil {
-		log.Printf("Error unable to retrieve user records: %s\n", err.Error())
+	if err == nil {
+		errMeta := map[string]string{
+			"description": "Unable to retrieve users",
+		}
 
-		stat = status.New(codes.Internal, "Internal server error")
-		return nil, stat.Err()
+		return nil, errors.NewInternalError(errMeta)
 	}
 
-	return &pb.ListResponse{
-		Ok:    true,
-		Users: users,
-	}, nil
+	return &pb.Users{Users: users}, nil
 }
