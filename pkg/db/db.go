@@ -1,12 +1,12 @@
 package db
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 
 	"github.com/diazharizky/use-case-inventory-management/config"
 	"github.com/diazharizky/use-case-inventory-management/internal/enum"
-	"gorm.io/gorm"
 )
 
 var (
@@ -19,7 +19,7 @@ func init() {
 	dbType = enum.DbType(config.Global.GetString("db.type"))
 }
 
-func GetConnection() (conn *gorm.DB) {
+func GetConnection() (conn *sql.DB) {
 	db, err := getDB()
 	if err != nil {
 		log.Fatalf("Error unable to get database connection: %v", err)

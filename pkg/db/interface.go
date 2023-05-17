@@ -1,9 +1,9 @@
 package db
 
 import (
-	"gorm.io/gorm"
+	"database/sql"
 )
 
 type IDatabase interface {
-	Connect() (*gorm.DB, error)
+	Connect() (*sql.DB, error)
 }

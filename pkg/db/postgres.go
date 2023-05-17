@@ -1,11 +1,11 @@
 package db
 
 import (
+	"database/sql"
 	"fmt"
 
 	"github.com/diazharizky/use-case-inventory-management/config"
-	driver "gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	_ "github.com/lib/pq"
 )
 
 type postgres struct {
@@ -37,10 +37,8 @@ func NewPostgres() postgres {
 	}
 }
 
-func (pg postgres) Connect() (*gorm.DB, error) {
-	cfg := &gorm.Config{}
-
-	db, err := gorm.Open(driver.Open(pg.dsn()), cfg)
+func (pg postgres) Connect() (*sql.DB, error) {
+	db, err := sql.Open("postgres", pg.dsn())
 	if err != nil {
 		return nil, fmt.Errorf("error unable to connect to PostgreSQL DB: %v", err)
 	}
