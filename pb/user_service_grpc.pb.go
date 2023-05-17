@@ -23,8 +23,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
-	List(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*ListResponse, error)
-	Create(ctx context.Context, in *User, opts ...grpc.CallOption) (*empty.Empty, error)
+	List(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*Users, error)
+	Create(ctx context.Context, in *User, opts ...grpc.CallOption) (*User, error)
 }
 
 type userServiceClient struct {
@@ -35,8 +35,8 @@ func NewUserServiceClient(cc grpc.ClientConnInterface) UserServiceClient {
 	return &userServiceClient{cc}
 }
 
-func (c *userServiceClient) List(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*ListResponse, error) {
-	out := new(ListResponse)
+func (c *userServiceClient) List(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*Users, error) {
+	out := new(Users)
 	err := c.cc.Invoke(ctx, "/pb.UserService/List", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -44,8 +44,8 @@ func (c *userServiceClient) List(ctx context.Context, in *empty.Empty, opts ...g
 	return out, nil
 }
 
-func (c *userServiceClient) Create(ctx context.Context, in *User, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *userServiceClient) Create(ctx context.Context, in *User, opts ...grpc.CallOption) (*User, error) {
+	out := new(User)
 	err := c.cc.Invoke(ctx, "/pb.UserService/Create", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -57,8 +57,8 @@ func (c *userServiceClient) Create(ctx context.Context, in *User, opts ...grpc.C
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
 type UserServiceServer interface {
-	List(context.Context, *empty.Empty) (*ListResponse, error)
-	Create(context.Context, *User) (*empty.Empty, error)
+	List(context.Context, *empty.Empty) (*Users, error)
+	Create(context.Context, *User) (*User, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -66,10 +66,10 @@ type UserServiceServer interface {
 type UnimplementedUserServiceServer struct {
 }
 
-func (UnimplementedUserServiceServer) List(context.Context, *empty.Empty) (*ListResponse, error) {
+func (UnimplementedUserServiceServer) List(context.Context, *empty.Empty) (*Users, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedUserServiceServer) Create(context.Context, *User) (*empty.Empty, error) {
+func (UnimplementedUserServiceServer) Create(context.Context, *User) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
