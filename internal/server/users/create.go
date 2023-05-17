@@ -13,7 +13,7 @@ import (
 func (srv server) Create(ctx context.Context, newUser *pb.User) (*emptypb.Empty, error) {
 	var stat *status.Status
 
-	if err := srv.appCtx.UserRepository.Create(*newUser); err != nil {
+	if err := srv.appCtx.UserRepository.Create(newUser); err != nil {
 		log.Printf("Error unable to create user record: %s\n", err.Error())
 
 		stat = status.New(codes.Internal, "Internal server error")
