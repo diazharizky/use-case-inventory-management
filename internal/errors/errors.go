@@ -12,6 +12,7 @@ func NewInternalError(errMeta map[string]string) error {
 	st := status.New(codes.Internal, "Internal error")
 
 	errDetails := &errdetails.ErrorInfo{}
+	errDetails.Reason = "SERVER_ERROR"
 	errDetails.Metadata = errMeta
 
 	st, err := st.WithDetails(errDetails)
