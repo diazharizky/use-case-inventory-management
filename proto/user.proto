@@ -14,3 +14,7 @@ message User {
   google.protobuf.Timestamp updated_at = 5;
   google.protobuf.Timestamp deleted_at = 6;
 }
+
+message Users {
+  repeated User users = 1;
+}
